@@ -4,18 +4,21 @@ import AdminDashboard from "./AdminDashboard";
 import UserPage from "./UserPage";
 
 import { useSelector } from "react-redux";
+import LoginSignupForm from "./LoginSignupForm";
 
 export default function Guard() {
-  const user = useSelector((state) => state.auth.user);
+  const id = useSelector((state) => state.auth.id);
+  const username = useSelector((state) => state.auth.username);
+  const email = useSelector((state) => state.auth.email);
   const role = useSelector((state) => state.auth.role);
 
   return (
     <>
-      <h1 className="text-3xl font-bold">{user || "Anonymous"}</h1>
-      {user ? <Logout /> : <Login />}
+      <h1 className="text-3xl font-bold">{username || email || "Anonymous"}</h1>
+      {id ? <Logout /> : <LoginSignupForm />}
 
-      {user && role === "admin" && <AdminDashboard />}
-      {user && role === "user" && <UserPage />}
+      {id && role === "admin" && <AdminDashboard />}
+      {id && role === "user" && <UserPage />}
     </>
   );
 }
